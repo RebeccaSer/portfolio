@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rebecca Serepa · Data‑Driven Full‑Stack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Radley:ital@1&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #343a40;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      line-height: 1.6;
+      color: #f1f3f5;
+      padding: 2rem 1rem;
+    }
+
+    .portfolio {
+      max-width: 1200px;
+      margin: 0 auto;
+      background-color: #2b2f33;
+      border-radius: 2rem;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 20px 35px -8px rgba(0,0,0,0.6);
+      border: 1px solid #4a4f55;
+      position: relative;
+      overflow: hidden; /* ensure code bg stays inside rounded borders */
+    }
+
+    /* Header section with code background */
+    .header-section {
+      position: relative;
+      padding: 2rem 0 1rem 0;
+      margin-bottom: 1rem;
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+
+    .code-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      font-family: 'Fira Code', monospace;
+      font-size: 1rem;
+      line-height: 1.2;
+      color: rgba(173, 181, 189, 0.12); /* #adb5bd with low opacity */
+      white-space: pre;
+      overflow: hidden;
+      pointer-events: none;
+      z-index: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 1rem;
+      animation: codeScroll 18s linear infinite;
+    }
+
+    /* two columns of code for richness */
+    .code-line {
+      display: flex;
+      gap: 3rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .code-line span {
+      display: inline-block;
+      width: 45%;
+      white-space: nowrap;
+    }
+
+    @keyframes codeScroll {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-50%); }
+    }
+
+    /* dark overlay to keep text readable */
+    .header-overlay {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 2rem;
+      padding: 1rem 2rem 2rem 2rem;
+      backdrop-filter: blur(2px);
+    }
+
+    h1, h2, h3 {
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      font-family: 'Radley', serif;
+      align-items: center;
+    }
+
+    h1 {
+      font-size: 7.5rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+      color: #ffffff;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    h2 {
+      font-size: 4rem;
+      margin: 2.5rem 0 1rem 0;
+      color: #ffffff;
+      border-bottom: 2px solid #adb5bd;
+      padding-bottom: 0.5rem;
+      display: inline-flex;
+    }
+
+    h3 {
+      font-size: 1.5rem;
+      margin: 1.8rem 0 0.8rem 0;
+      color: #ffffff;
+    }
+
+    .subhead {
+      font-size: 1.5rem;
+      color: #adb5bd;
+      margin-bottom: 1.5rem;
+      font-weight: 350;
+      text-align: center;
+    }
+
+    p {
+      margin-bottom: 1.2rem;
+      color: #dee2e6;
+    }
+
+    hr {
+      border: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #adb5bd, transparent);
+      margin: 2.2rem 0;
+    }
+
+    .behind-container {
+      display: flex;
+      gap: 2rem;
+      margin: 2rem 0 1rem 0;
+      align-items: center;
+    }
+
+    .behind-text {
+      flex: 2;
+    }
+
+    .behind-image {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .behind-image img {
+      width: 100%;
+      height: auto;
+      border-radius: 150px 150px 0 0;
+      border: 3px solid #adb5bd;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      object-fit: cover;
+      aspect-ratio: 12/16;
+    }
+
+    /* project cards */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin: 2rem 0 1rem;
+    }
+
+    .project-card {
+      background: #343a40;
+      border-radius: 1.5rem;
+      padding: 1.8rem;
+      border: 1px solid #5a626e;
+      transition: transform 0.2s ease, border-color 0.2s;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-card:hover {
+      border-color: #adb5bd;
+      transform: translateY(-4px);
+    }
+
+    .project-card h4 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      margin-bottom: 1rem;
+      color: #ffffff;
+    }
+
+    .project-card p {
+      font-size: 1rem;
+      color: #ced4da;
+      flex: 1;
+    }
+
+    .project-link {
+      margin-top: 1.5rem;
+      text-align: right;
+    }
+
+    .project-link a {
+      color: #adb5bd;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px dotted #adb5bd;
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .project-link a:hover {
+      color: #ffffff;
+      border-bottom-color: #ffffff;
+    }
+
+    /* skills sections */
+    .skill-category {
+      margin: 2rem 0 1.2rem 0;
+    }
+
+    .skill-category strong {
+      display: block;
+      font-size: 1.2rem;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.3px;
+    }
+
+    .skill-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.5rem;
+      color: #adb5bd;
+      font-size: 1.1rem;
+    }
+
+    .skill-items span {
+      color: #dee2e6;
+    }
+
+    .skill-items span::before {
+      content: "·";
+      color: #adb5bd;
+      font-weight: bold;
+      margin-right: 0.5rem;
+    }
+
+    .skill-items span:first-child::before {
+      content: "";
+      margin-right: 0;
+    }
+
+    /* core strengths use | instead of · */
+    .strength-items {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1rem;
+      color: #dee2e6;
+      font-size: 1.1rem;
+    }
+
+    .strength-items span:not(:last-child)::after {
+      content: "|";
+      color: #adb5bd;
+      margin-left: 1rem;
+      font-weight: 400;
+    }
+
+    /* certifications section */
+    .cert-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .cert-card {
+      background: #343a40;
+      border: 1px solid #5a626e;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      transition: border-color 0.2s;
+    }
+
+    .cert-card:hover {
+      border-color: #adb5bd;
+    }
+
+    .cert-card h5 {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+      font-family: 'Radley', serif;
+    }
+
+    .cert-card p {
+      font-size: 1rem;
+      color: #adb5bd;
+      margin-bottom: 0;
+    }
+
+    .badge {
+      display: inline-block;
+      background: #adb5bd;
+      color: #1e2124;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.8rem;
+      border-radius: 2rem;
+      margin-top: 0.5rem;
+      font-weight: 600;
+    }
+
+    /* contact area */
+    .contact-row {
+      background: #2b2f33;
+      border: 1px solid #4f5a66;
+      border-radius: 3rem;
+      padding: 1.8rem 2rem;
+      margin-top: 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.5rem 2.5rem;
+      font-size: 1.15rem;
+    }
+
+    .contact-details div {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: #f1f3f5;
+    }
+
+    .contact-details i { 
+      font-style: normal;
+      color: #adb5bd;
+      font-weight: 400;
+    }
+
+    .contact-tagline {
+      font-size: 1.25rem;
+      font-weight: 400;
+      color: #adb5bd;
+      border-left: 2px solid #adb5bd;
+      padding-left: 1.5rem;
+    }
+
+    .contact-tagline strong {
+      color: white;
+      font-weight: 500;
+    }
+
+    .footer-name {
+      font-size: 1.8rem;
+      color: #ffffff;
+      border-top: 1px dashed #5f6b7a;
+      padding-top: 2rem;
+      margin-top: 2rem;
+      text-align: center;
+      font-family: 'Radley', serif;
+    }
+
+    @media (max-width: 700px) {
+      .behind-container {
+        flex-direction: column;
+      }
+      .portfolio { padding: 1.5rem; }
+      h1 { font-size: 3.8rem; }
+      h2 { font-size: 2.8rem; }
+      .contact-row { flex-direction: column; align-items: flex-start; border-radius: 2rem; }
+      .contact-tagline { border-left: none; padding-left: 0; border-top: 2px solid #adb5bd; padding-top: 1rem; }
+      .code-bg { font-size: 0.8rem; }
+    }
+  </style>
+  <!-- load react and babel for jsx -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script type="text/babel">
+    function App() {
+      // Sample code lines for background (endless loop)
+      const codeLines = [
+        'const createApp = () => { ... }',
+        'export default Portfolio;',
+        'function fetchData() { return fetch("/api/user"); }',
+        'db.query("SELECT * FROM projects");',
+        '<React.StrictMode>',
+        'useEffect(() => { ... }, []);',
+        'docker-compose up -d',
+        'pandas.read_csv("data.csv")',
+        'spark.sql("SELECT * FROM events")',
+        'kafka.consume("topic")',
+        'git commit -m "feat: add code bg"',
+        'npm run build',
+        'class DataEngineer { ... }',
+        'interface SoftwareEngineer',
+        'npx create-react-app portfolio',
+        'res.json({ user: "Rebecca" })',
+        'app.listen(3000, () => {})',
+        'SELECT * FROM users;',
+        'model.train(epochs=10)',
+        '<div className="portfolio">',
+        'styled.button` background: #343a40; `'
+      ];
+
+      // Duplicate for seamless scrolling
+      const allLines = [...codeLines, ...codeLines];
+
+      return (
+        <div className="portfolio">
+          {/* HEADER with code background */}
+          <div className="header-section">
+            <div className="code-bg">
+              {allLines.map((line, idx) => (
+                <div key={idx} className="code-line">
+                  <span>{line}</span>
+                  <span>{line.split('').reverse().join('')}</span> {/* reverse for variation */}
+                </div>
+              ))}
+            </div>
+            <div className="header-overlay">
+              <h1>Hello, I am Rebecca!</h1>
+              <div className="subhead">
+                Certified Software Engineer · Data-Driven Full-Stack Developer
+              </div>
+            </div>
+          </div>
+
+          {/* BEHIND THE SCREENS with image */}
+          <section>
+            <h2>Behind the Screens</h2>
+            <div className="behind-container">
+              <div className="behind-text">
+                <p>
+                  I’m a graduate software engineer with a strong foundation in full-stack development and a growing interest in data-driven systems. I enjoy building practical, scalable applications that solve real problems, using modern web technologies and clean, maintainable code.
+                </p>
+                <p>
+                  My technical toolkit includes JavaScript, TypeScript, React, Node.js, and backend development supported by basic SQL, MySQL, PostgreSQL and Python tools and frameworks. I’m comfortable working across the stack — from crafting responsive user interfaces to designing backend logic and working with data at a foundational level.
+                </p>
+                <p>
+                  What drives me most is impact. I come from a rural village with limited access to opportunities, and that experience shapes how I approach technology. I’m motivated by the idea that well-designed software can reduce barriers, create access, and expose underserved communities to broader economic and educational opportunities.
+                </p>
+                <p>
+                  This perspective influences both the problems I choose to work on and how I think about users. As a graduate, I’m eager to learn, contribute, and grow within collaborative engineering teams. I value writing purposeful code, understanding systems end-to-end, and continuously improving my skills while building software that matters.
+                </p>
+              </div>
+              <div className="behind-image">
+                <img 
+                  src="IMG_2509.jpg" 
+                  alt="Rebecca Serepa portrait"
+                />
+              </div>
+            </div>
+          </section>
+
+          <hr />
+
+          {/* FEATURED PROJECTS with links */}
+          <section>
+            <h2>Featured Projects</h2>
+            <div className="project-grid">
+              {/* CommunityVoice */}
+              <div className="project-card">
+                <h4>CommUnityVoice</h4>
+                <p>
+                  A full-stack application that digitizes community governance, enabling residents to report, track, and vote on local issues in real-time. Built with Node.js and React, this platform bridges the gap between citizens and local leadership through transparent issue tracking, democratic voting, and actionable admin tools — turning civic feedback into community progress.
+                </p>
+                <div className="project-link">
+                  <a href="https://communityvoice.demo.com" target="_blank" rel="noopener noreferrer">View live project →</a>
+                </div>
+              </div>
+              {/* Maggie The MUA */}
+              <div className="project-card">
+                <h4>Maggie The MUA</h4>
+                <p>
+                  A full-stack platform that unifies beauty service bookings with e-commerce in one seamless experience. I engineered this production-ready application to solve real business fragmentation, allowing clients to schedule makeup appointments, shop premium hair extensions, and checkout in a single transaction. Built with React, Node.js, and PostgreSQL, it features integrated payments, real-time inventory, and an intuitive admin dashboard.
+                </p>
+                <div className="project-link">
+                  <a href="https://maggiethemua.demo.com" target="_blank" rel="noopener noreferrer">View live project →</a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* CERTIFICATIONS SECTION */}
+          <section>
+            <h2>Certifications & Credentials</h2>
+            <div className="cert-grid">
+              <div className="cert-card">
+                <h5>Python Data Associate</h5>
+                <p>DataCamp · 2026</p>
+                <span className="badge">Associate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Introduction to Relational Databases(RDBMS)
+                </h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Data Analysis with Python</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>
+                    Excel Basics for Data Analysis</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>
+                    Generative AI: Introduction and Applications</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>
+                    Introduction to Artificial Intelligence (AI)
+                </h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>
+                    Introduction to Software Engineering</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>
+                    Building Generative AI-Powered Applications with Python
+                </h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Generative AI: Prompt Engineering Basics</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Python for Data Science, AI & Development</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Introduction to Big Data with Spark and Hadoop</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>ETL and Data Pipelines with Shell, Airflow and Kafka</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Python Project for Data Engineering</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Databases and SQL for Data Science with Python</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Intermediate</span>
+              </div>
+              <div className="cert-card">
+                <h5>Introduction to Big Data with Spark and Hadoop</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Python for Data Science, AI & Development</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Fundamentals of Cloud Computing</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Introduction to Data Analytics</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+              <div className="cert-card">
+                <h5>Introduction to Data Engineering</h5>
+                <p>Cousera · 2025</p>
+                <span className="badge">Foundational</span>
+              </div>
+            </div>
+            <p style={{ textAlign: 'center', color: '#adb5bd', marginTop: '0.5rem' }}>
+              ⚡ Certified Software Engineer · Certified Data Engineer
+            </p>
+          </section>
+
+          {/* FULL-STACK DEVELOPMENT WITH DATA FOUNDATION */}
+          <section>
+            <h2>Full-Stack Development with a Data-Driven Foundation</h2>
+
+            <div className="skill-category">
+              <strong>Programming</strong>
+              <div className="skill-items">
+                <span>SQL</span> <span>Python</span> <span>JavaScript</span> <span>HTML</span> <span>CSS</span> <span>Java</span>
+              </div>
+            </div>
+
+            <div className="skill-category">
+              <strong>Frameworks & Tools</strong>
+              <div className="skill-items">
+                <span>React</span> <span>Node.js</span> <span>Express.js</span> <span>Apache Spark</span> <span>Kafka</span> <span>Docker</span>
+              </div>
+            </div>
+
+            <div className="skill-category">
+              <strong>Data & Databases</strong>
+              <div className="skill-items">
+                <span>SQL</span> <span>PostgreSQL</span> <span>NoSQL</span>
+              </div>
+            </div>
+
+            <div className="skill-category">
+              <strong>Core Strengths</strong>
+              <div className="strength-items">
+                <span>Problem Solving</span>
+                <span>Analytical Thinking</span>
+                <span>Adaptability</span>
+                <span>Attention to Detail</span>
+                <span>Accountability/Ownership</span>
+              </div>
+            </div>
+          </section>
+
+          {/* OPEN TO CONVERSATIONS & CONTACT */}
+          <div className="contact-row">
+            <div className="contact-details">
+              <div><i>📞</i> +27726169993</div>
+              <div><i>✉️</i> serepasr06@gmail.com</div>
+            </div>
+            <div className="contact-tagline">
+              <strong>Open to conversations & opportunities.</strong>
+            </div>
+          </div>
+
+          <div className="footer-name">
+            Selaelo Rebecca Serepa
+          </div>
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
+</body>
+</html>
